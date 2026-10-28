@@ -1,0 +1,110 @@
+{
+  "relatorio": [
+    {
+      "viewport": "mobile-320",
+      "rota": "/app",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "mobile-320",
+      "rota": "/app/admin/usuarios",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "mobile-320",
+      "rota": "/app/biblioteca",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "mobile-320",
+      "rota": "/app/assinatura",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "mobile-320",
+      "rota": "/app/pagamentos",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app/admin/usuarios",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app/biblioteca",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app/assinatura",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app/pagamentos",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "desktop-1440",
+      "rota": "/app",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "desktop-1440",
+      "rota": "/app/admin/usuarios",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "desktop-1440",
+      "rota": "/app/biblioteca",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "desktop-1440",
+      "rota": "/app/assinatura",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "desktop-1440",
+      "rota": "/app/pagamentos",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    }
+  ],
+  "achados": []
+}

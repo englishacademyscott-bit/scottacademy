@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Scott English Academy">
+  <defs>
+    <clipPath id="badge">
+      <circle cx="256" cy="256" r="248"/>
+    </clipPath>
+    <linearGradient id="navy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1B2A4A"/>
+      <stop offset="100%" stop-color="#0B1120"/>
+    </linearGradient>
+    <path id="topArc" d="M 256 256 m -196 0 a 196 196 0 0 1 392 0" fill="none"/>
+    <path id="botArc" d="M 256 256 m -168 0 a 168 168 0 0 0 336 0" fill="none"/>
+  </defs>
+
+  <circle cx="256" cy="256" r="250" fill="#F8FAFC"/>
+
+  <g clip-path="url(#badge)">
+    <circle cx="256" cy="256" r="248" fill="url(#navy)"/>
+
+    <!-- escudo central -->
+    <g transform="translate(256 262)">
+      <!-- logo atrás -->
+      <path d="M -104 -46 L -74 -60 L -74 34 L -104 20 Z" fill="#FFFFFF" opacity="0.95"/>
+      <path d="M 104 -46 L 74 -60 L 74 34 L 104 20 Z" fill="#FFFFFF" opacity="0.95"/>
+      <path d="M 0 -62 L 74 -60 L 74 34 L 0 52 Z" fill="#E2E8F0"/>
+      <path d="M 0 -62 L -74 -60 L -74 34 L 0 52 Z" fill="#FFFFFF"/>
+      <!-- pregos -->
+      <g fill="#0B1120" opacity="0.85">
+        <circle cx="-52" cy="-40" r="4.5"/>
+        <circle cx="52" cy="-40" r="4.5"/>
+        <circle cx="-52" cy="6" r="4.5"/>
+        <circle cx="52" cy="6" r="4.5"/>
+      </g>
+      <!-- estrela -->
+      <path d="M 0 -30 L 9.5 -9.5 L 32 -9.5 L 14.7 3.5 L 21 26 L 0 12 L -21 26 L -14.7 3.5 L -32 -9.5 L -9.5 -9.5 Z"
+            fill="#DC2626" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+      <!-- base do escudo -->
+      <path d="M -78 30 L 0 48 L 78 30 L 78 44 L 0 62 L -78 44 Z" fill="#DC2626"/>
+    </g>
+
+    <!-- texto superior -->
+    <text font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700"
+          letter-spacing="13" fill="#FFFFFF" text-anchor="middle">
+      <textPath href="#topArc" startOffset="50%">SCOTT</textPath>
+    </text>
+
+    <!-- texto inferior -->
+    <text font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700"
+          letter-spacing="5.5" fill="#FFFFFF" text-anchor="middle">
+      <textPath href="#botArc" startOffset="50%">ENGLISH ACADEMY</textPath>
+    </text>
+  </g>
+
+  <!-- anéis -->
+  <circle cx="256" cy="256" r="247" fill="none" stroke="#F8FAFC" stroke-width="7"/>
+  <circle cx="256" cy="256" r="232" fill="none" stroke="#F8FAFC" stroke-width="3.5"/>
+</svg>

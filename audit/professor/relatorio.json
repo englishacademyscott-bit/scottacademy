@@ -1,0 +1,47 @@
+{
+  "relatorio": [
+    {
+      "viewport": "mobile-320",
+      "rota": "/app",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "mobile-320",
+      "rota": "/app/alunos",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "mobile-320",
+      "rota": "/app/correcoes",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app/alunos",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    },
+    {
+      "viewport": "tablet-1024",
+      "rota": "/app/correcoes",
+      "status": 200,
+      "overflow": [],
+      "consoleErrors": []
+    }
+  ],
+  "achados": []
+}

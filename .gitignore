@@ -1,0 +1,16 @@
+node_modules
+.next
+.env
+*.log
+.DS_Store
+src/generated
+
+*.tsbuildinfo
+__tmp*
+src/__probe.tsx
+audit/*.png
+audit/**/*.png
+public/brand/_test.png
+audit/dynamic-routes.txt
+.env.*
+!.env.example

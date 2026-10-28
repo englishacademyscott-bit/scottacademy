@@ -1,0 +1,91 @@
+{
+  "total": 21,
+  "passed": 21,
+  "failed": 0,
+  "results": [
+    {
+      "name": "Cadastro recusa senhas diferentes",
+      "ok": true
+    },
+    {
+      "name": "Cadastro cria apenas perfil ALUNO",
+      "ok": true
+    },
+    {
+      "name": "Login recusa credenciais inválidas",
+      "ok": true
+    },
+    {
+      "name": "Login normaliza e-mail e preserva destino com filtros",
+      "ok": true
+    },
+    {
+      "name": "Busca do topo abre o catálogo filtrado",
+      "ok": true
+    },
+    {
+      "name": "Link direto não libera aula sem matrícula",
+      "ok": true
+    },
+    {
+      "name": "Inscrição persiste e libera o curso",
+      "ok": true
+    },
+    {
+      "name": "Concluir todas as aulas finaliza o curso em 100%",
+      "ok": true
+    },
+    {
+      "name": "Conclusão do curso emite um certificado",
+      "ok": true
+    },
+    {
+      "name": "Desmarcar aula reabre o curso e limpa conclusão",
+      "ok": true
+    },
+    {
+      "name": "Cancelar matrícula bloqueia novamente a aula",
+      "ok": true
+    },
+    {
+      "name": "Nova inscrição preserva o progresso anterior",
+      "ok": true
+    },
+    {
+      "name": "Certificado renderiza em celular",
+      "ok": true
+    },
+    {
+      "name": "Certificado não é duplicado ao revisitar o curso",
+      "ok": true
+    },
+    {
+      "name": "Abrir URL da prova não consome tentativa",
+      "ok": true
+    },
+    {
+      "name": "Começar prova cria uma tentativa",
+      "ok": true
+    },
+    {
+      "name": "Enviar prova abre resultado e persiste a nota",
+      "ok": true
+    },
+    {
+      "name": "Notificações são marcadas como lidas",
+      "ok": true
+    },
+    {
+      "name": "Perfil atualizado aparece no menu sem novo login",
+      "ok": true
+    },
+    {
+      "name": "Sair encerra a sessão e protege as rotas",
+      "ok": true
+    },
+    {
+      "name": "Login ignora redirecionamento para domínio externo",
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="crestNavy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1B2A4A"/>
+      <stop offset="100%" stop-color="#0B1120"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(256 256) scale(1.28)">
+    <path d="M -104 -46 L -74 -60 L -74 34 L -104 20 Z" fill="#F8FAFC"/>
+    <path d="M 104 -46 L 74 -60 L 74 34 L 104 20 Z" fill="#E2E8F0"/>
+    <path d="M 0 -62 L 74 -60 L 74 34 L 0 52 Z" fill="#E2E8F0"/>
+    <path d="M 0 -62 L -74 -60 L -74 34 L 0 52 Z" fill="#FFFFFF"/>
+    <g fill="#0B1120" opacity="0.9">
+      <circle cx="-52" cy="-40" r="4.5"/>
+      <circle cx="52" cy="-40" r="4.5"/>
+      <circle cx="-52" cy="6" r="4.5"/>
+      <circle cx="52" cy="6" r="4.5"/>
+    </g>
+    <path d="M 0 -30 L 9.5 -9.5 L 32 -9.5 L 14.7 3.5 L 21 26 L 0 12 L -21 26 L -14.7 3.5 L -32 -9.5 L -9.5 -9.5 Z"
+          fill="#DC2626" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M -78 30 L 0 48 L 78 30 L 78 44 L 0 62 L -78 44 Z" fill="#DC2626"/>
+  </g>
+</svg>

@@ -1,0 +1,1064 @@
+{
+  "mode": "browser",
+  "total": 132,
+  "passed": 132,
+  "failed": 0,
+  "results": [
+    {
+      "role": "PUBLICO",
+      "route": "/",
+      "status": 200,
+      "finalPath": "/",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/login",
+      "status": 200,
+      "finalPath": "/login",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/cadastro",
+      "status": 200,
+      "finalPath": "/cadastro",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/offline",
+      "status": 200,
+      "finalPath": "/offline",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/api/health",
+      "status": 200,
+      "finalPath": "/api/health",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/api/auth/csrf",
+      "status": 200,
+      "finalPath": "/api/auth/csrf",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/manifest.webmanifest",
+      "status": 200,
+      "finalPath": "/manifest.webmanifest",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/sw.js",
+      "status": 200,
+      "finalPath": "/sw.js",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/app/cursos?q=ingles",
+      "status": 307,
+      "finalPath": "/app/cursos?q=ingles",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/pagina-inexistente-auditoria",
+      "status": 404,
+      "finalPath": "/pagina-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/admin/usuarios",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/agenda",
+      "status": 200,
+      "finalPath": "/app/agenda",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/alunos",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/assinatura",
+      "status": 200,
+      "finalPath": "/app/assinatura",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/aulas",
+      "status": 200,
+      "finalPath": "/app/aulas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/biblioteca",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/certificados",
+      "status": 200,
+      "finalPath": "/app/certificados",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/configuracoes",
+      "status": 200,
+      "finalPath": "/app/configuracoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/correcoes",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/cursos",
+      "status": 200,
+      "finalPath": "/app/cursos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/notificacoes",
+      "status": 200,
+      "finalPath": "/app/notificacoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/pagamentos",
+      "status": 200,
+      "finalPath": "/app/pagamentos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/particulares",
+      "status": 200,
+      "finalPath": "/app/particulares",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/progresso",
+      "status": 200,
+      "finalPath": "/app/progresso",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/provas",
+      "status": 200,
+      "finalPath": "/app/provas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/suporte",
+      "status": 200,
+      "finalPath": "/app/suporte",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/cursos/ingles-basico-do-zero",
+      "status": 200,
+      "finalPath": "/app/cursos/ingles-basico-do-zero",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/cursos/conversacao-intermediario",
+      "status": 200,
+      "finalPath": "/app/cursos/conversacao-intermediario",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/cursos/business-english",
+      "status": 200,
+      "finalPath": "/app/cursos/business-english",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/cursos/pronunciacao-e-fluencia",
+      "status": 200,
+      "finalPath": "/app/cursos/pronunciacao-e-fluencia",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "status": 200,
+      "finalPath": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/particulares/cmvrefqkk007hm0e8tt5hvqzt",
+      "status": 200,
+      "finalPath": "/app/particulares/cmvrefqkk007hm0e8tt5hvqzt",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/cursos/curso-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/cursos/curso-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/aulas/aula-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/aulas/aula-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/provas/prova-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/prova-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/particulares/sessao-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/particulares/sessao-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/admin/usuarios",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/agenda",
+      "status": 200,
+      "finalPath": "/app/agenda",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/alunos",
+      "status": 200,
+      "finalPath": "/app/alunos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/assinatura",
+      "status": 200,
+      "finalPath": "/app/assinatura",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/aulas",
+      "status": 200,
+      "finalPath": "/app/aulas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/biblioteca",
+      "status": 200,
+      "finalPath": "/app/biblioteca",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/certificados",
+      "status": 200,
+      "finalPath": "/app/certificados",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/configuracoes",
+      "status": 200,
+      "finalPath": "/app/configuracoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/correcoes",
+      "status": 200,
+      "finalPath": "/app/correcoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/cursos",
+      "status": 200,
+      "finalPath": "/app/cursos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/notificacoes",
+      "status": 200,
+      "finalPath": "/app/notificacoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/pagamentos",
+      "status": 200,
+      "finalPath": "/app/pagamentos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/particulares",
+      "status": 200,
+      "finalPath": "/app/particulares",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/progresso",
+      "status": 200,
+      "finalPath": "/app/progresso",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/provas",
+      "status": 200,
+      "finalPath": "/app/provas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/suporte",
+      "status": 200,
+      "finalPath": "/app/suporte",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/cursos/ingles-basico-do-zero",
+      "status": 200,
+      "finalPath": "/app/cursos/ingles-basico-do-zero",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/cursos/conversacao-intermediario",
+      "status": 200,
+      "finalPath": "/app/cursos/conversacao-intermediario",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/cursos/business-english",
+      "status": 200,
+      "finalPath": "/app/cursos/business-english",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/cursos/pronunciacao-e-fluencia",
+      "status": 200,
+      "finalPath": "/app/cursos/pronunciacao-e-fluencia",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "status": 200,
+      "finalPath": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/cursos/curso-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/cursos/curso-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/aulas/aula-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/aulas/aula-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/provas/prova-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/prova-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/particulares/sessao-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/particulares/sessao-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
+      "route": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/admin/usuarios",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/agenda",
+      "status": 200,
+      "finalPath": "/app/agenda",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/alunos",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/assinatura",
+      "status": 200,
+      "finalPath": "/app/assinatura",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/aulas",
+      "status": 200,
+      "finalPath": "/app/aulas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/biblioteca",
+      "status": 200,
+      "finalPath": "/app/biblioteca",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/certificados",
+      "status": 200,
+      "finalPath": "/app/certificados",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/configuracoes",
+      "status": 200,
+      "finalPath": "/app/configuracoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/correcoes",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/cursos",
+      "status": 200,
+      "finalPath": "/app/cursos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/notificacoes",
+      "status": 200,
+      "finalPath": "/app/notificacoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/pagamentos",
+      "status": 200,
+      "finalPath": "/app/pagamentos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/particulares",
+      "status": 200,
+      "finalPath": "/app/particulares",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/progresso",
+      "status": 200,
+      "finalPath": "/app/progresso",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/provas",
+      "status": 200,
+      "finalPath": "/app/provas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/suporte",
+      "status": 200,
+      "finalPath": "/app/suporte",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/cursos/ingles-basico-do-zero",
+      "status": 200,
+      "finalPath": "/app/cursos/ingles-basico-do-zero",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/cursos/conversacao-intermediario",
+      "status": 200,
+      "finalPath": "/app/cursos/conversacao-intermediario",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/cursos/business-english",
+      "status": 200,
+      "finalPath": "/app/cursos/business-english",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/cursos/pronunciacao-e-fluencia",
+      "status": 200,
+      "finalPath": "/app/cursos/pronunciacao-e-fluencia",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "status": 200,
+      "finalPath": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/cursos/curso-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/cursos/curso-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/aulas/aula-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/aulas/aula-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/provas/prova-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/prova-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/particulares/sessao-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/particulares/sessao-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/admin/usuarios",
+      "status": 200,
+      "finalPath": "/app/admin/usuarios",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/agenda",
+      "status": 200,
+      "finalPath": "/app/agenda",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/alunos",
+      "status": 200,
+      "finalPath": "/app/alunos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/assinatura",
+      "status": 200,
+      "finalPath": "/app/assinatura",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/aulas",
+      "status": 200,
+      "finalPath": "/app/aulas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/biblioteca",
+      "status": 200,
+      "finalPath": "/app/biblioteca",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/certificados",
+      "status": 200,
+      "finalPath": "/app/certificados",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/configuracoes",
+      "status": 200,
+      "finalPath": "/app/configuracoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/correcoes",
+      "status": 200,
+      "finalPath": "/app/correcoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/cursos",
+      "status": 200,
+      "finalPath": "/app/cursos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/notificacoes",
+      "status": 200,
+      "finalPath": "/app/notificacoes",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/pagamentos",
+      "status": 200,
+      "finalPath": "/app/pagamentos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app",
+      "status": 200,
+      "finalPath": "/app",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/particulares",
+      "status": 200,
+      "finalPath": "/app/particulares",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/progresso",
+      "status": 200,
+      "finalPath": "/app/progresso",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/provas",
+      "status": 200,
+      "finalPath": "/app/provas",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/suporte",
+      "status": 200,
+      "finalPath": "/app/suporte",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/cursos/ingles-basico-do-zero",
+      "status": 200,
+      "finalPath": "/app/cursos/ingles-basico-do-zero",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/cursos/conversacao-intermediario",
+      "status": 200,
+      "finalPath": "/app/cursos/conversacao-intermediario",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/cursos/business-english",
+      "status": 200,
+      "finalPath": "/app/cursos/business-english",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/cursos/pronunciacao-e-fluencia",
+      "status": 200,
+      "finalPath": "/app/cursos/pronunciacao-e-fluencia",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqek003rm0e8w33oswvf",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqgg004vm0e8ifgj3qcv",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "status": 200,
+      "finalPath": "/app/provas/cmvrefqih0067m0e85yp5hlbt",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "status": 200,
+      "finalPath": "/app/aulas/cmvrefq7j000tm0e8ckso5jvb",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/particulares/cmvrefqkk007hm0e8tt5hvqzt",
+      "status": 200,
+      "finalPath": "/app/particulares/cmvrefqkk007hm0e8tt5hvqzt",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/cursos/curso-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/cursos/curso-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/aulas/aula-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/aulas/aula-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/provas/prova-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/prova-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/particulares/sessao-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/particulares/sessao-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "status": 200,
+      "finalPath": "/app/provas/resultado/tentativa-inexistente-auditoria",
+      "errors": [],
+      "ok": true
+    }
+  ]
+}

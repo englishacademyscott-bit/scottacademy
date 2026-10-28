@@ -1,0 +1,374 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ALUNO
+  PROFESSOR
+  EDITOR
+  ADMIN
+}
+
+enum LessonKind {
+  AULA_GRAVADA
+  AULA_AO_VIVO
+  AULA_PARTICULAR
+}
+
+enum EnrollmentStatus {
+  ATIVO
+  CONCLUIDO
+  CANCELADO
+}
+
+enum SessionStatus {
+  AGENDADA
+  CONFIRMADA
+  CONCLUIDA
+  CANCELADA
+  FALTou
+}
+
+enum PaymentStatus {
+  PENDENTE
+  PAGO
+  FALHOU
+  REEMBOLSADO
+}
+
+enum PaymentMethod {
+  CARTAO
+  PIX
+  BOLETO
+  ASSINATURA
+}
+
+enum PlanInterval {
+  MENSAL
+  TRIMESTRAL
+  ANUAL
+}
+
+enum SubscriptionStatus {
+  ATIVA
+  INATIVA
+  CANCELADA
+}
+
+enum QuestionType {
+  MULTIPLA_ESCOLHA
+  VERDADEIRO_FALSO
+  TEXTO_LIVRE
+}
+
+enum AttemptStatus {
+  EM_ANDAMENTO
+  CONCLUIDA
+}
+
+enum CertificateStatus {
+  EMITIDO
+  REVOGADO
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(ALUNO)
+  avatarUrl    String?
+  bio          String?
+  phone        String?
+  document     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  coursesAuthored  Course[]        @relation("CourseTeacher")
+  enrollments      Enrollment[]
+  lessonProgress   LessonProgress[]
+  attempts         ExamAttempt[]
+  payments         Payment[]
+  subscription     Subscription?
+  certificates     Certificate[]
+  scheduledAsTeacher ScheduledSession[] @relation("SessionTeacher")
+  scheduledAsStudent ScheduledSession[] @relation("SessionStudent")
+  createdSessions  ScheduledSession[] @relation("SessionCreator")
+  reviews          Review[]
+  notifications    Notification[]
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  subtitle    String?
+  description String
+  coverUrl    String?
+  category    String
+  level       String   @default("INICIANTE")
+  published   Boolean  @default(false)
+  priceCents  Int      @default(0)
+  durationMin Int      @default(0)
+  teacherId   String
+  teacher     User     @relation("CourseTeacher", fields: [teacherId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  modules     Module[]
+  enrollments Enrollment[]
+  sessions    ScheduledSession[]
+  exams       Exam[]
+  reviews     Review[]
+  certificates Certificate[]
+  payments    Payment[]
+}
+
+model Module {
+  id        String   @id @default(cuid())
+  title     String
+  summary   String?
+  position  Int
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons   Lesson[]
+  exams     Exam[]
+  createdAt DateTime @default(now())
+
+  @@unique([courseId, position])
+}
+
+model Lesson {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  kind        LessonKind @default(AULA_GRAVADA)
+  videoUrl    String?
+  provider    String?    @default("embed")
+  durationSec Int        @default(0)
+  position    Int
+  free        Boolean    @default(false)
+  published   Boolean    @default(false)
+  moduleId    String
+  module      Module     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  progress LessonProgress[]
+  materials LessonMaterial[]
+
+  @@unique([moduleId, position])
+}
+
+model LessonMaterial {
+  id        String   @id @default(cuid())
+  title     String
+  url       String
+  kind      String   @default("PDF")
+  lessonId  String
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+}
+
+model LessonProgress {
+  id             String    @id @default(cuid())
+  watchedPercent Int       @default(0)
+  completed      Boolean   @default(false)
+  lastPositionSec Int     @default(0)
+  lastViewedAt   DateTime  @default(now())
+  completedAt    DateTime?
+  studentId      String
+  student        User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  lessonId       String
+  lesson         Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, lessonId])
+}
+
+model Enrollment {
+  id        String           @id @default(cuid())
+  status    EnrollmentStatus @default(ATIVO)
+  progress  Int              @default(0)
+  startedAt DateTime         @default(now())
+  finishedAt DateTime?
+  studentId String
+  student   User             @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId  String
+  course    Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId])
+}
+
+model ScheduledSession {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  kind        LessonKind    @default(AULA_AO_VIVO)
+  status      SessionStatus @default(AGENDADA)
+  startsAt    DateTime
+  endsAt      DateTime
+  meetingUrl  String?
+  meetingCode String?
+  recordedUrl String?
+  teacherId   String
+  teacher     User          @relation("SessionTeacher", fields: [teacherId], references: [id], onDelete: Cascade)
+  studentId   String?
+  student     User?         @relation("SessionStudent", fields: [studentId], references: [id], onDelete: SetNull)
+  courseId    String?
+  course      Course?       @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  createdById String
+  createdBy   User          @relation("SessionCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+}
+
+model Plan {
+  id          String       @id @default(cuid())
+  name        String
+  slug        String       @unique
+  description String
+  priceCents  Int
+  interval    PlanInterval @default(MENSAL)
+  features    String[]
+  highlight   Boolean      @default(false)
+  active      Boolean      @default(true)
+  position    Int          @default(0)
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id                String             @id @default(cuid())
+  status            SubscriptionStatus @default(ATIVA)
+  startedAt         DateTime           @default(now())
+  currentPeriodEnd  DateTime
+  cancelledAt       DateTime?
+  userId            String             @unique
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId            String
+  plan              Plan               @relation(fields: [planId], references: [id])
+}
+
+model Payment {
+  id          String        @id @default(cuid())
+  amountCents Int
+  status      PaymentStatus @default(PENDENTE)
+  method      PaymentMethod @default(CARTAO)
+  reference   String        @unique
+  description String
+  paidAt      DateTime?
+  dueAt       DateTime?
+  studentId   String
+  student     User          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId    String?
+  course      Course?       @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  createdAt   DateTime      @default(now())
+}
+
+model Exam {
+  id              String   @id @default(cuid())
+  title           String
+  description     String?
+  timeLimitMin    Int      @default(30)
+  passingPercent  Int      @default(60)
+  maxAttempts     Int      @default(3)
+  shuffleQuestions Boolean @default(true)
+  published       Boolean  @default(false)
+  courseId        String?
+  course          Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  moduleId        String?
+  module          Module?  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+
+  questions Question[]
+  attempts  ExamAttempt[]
+}
+
+model Question {
+  id         String       @id @default(cuid())
+  type       QuestionType @default(MULTIPLA_ESCOLHA)
+  prompt     String
+  explanation String?
+  points     Int          @default(1)
+  position   Int
+  examId     String
+  exam       Exam         @relation(fields: [examId], references: [id], onDelete: Cascade)
+  options    Option[]
+  answers    ExamAnswer[]
+
+  @@unique([examId, position])
+}
+
+model Option {
+  id         String   @id @default(cuid())
+  text       String
+  isCorrect  Boolean  @default(false)
+  position   Int
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answers    ExamAnswer[]
+}
+
+model ExamAttempt {
+  id          String        @id @default(cuid())
+  status      AttemptStatus @default(EM_ANDAMENTO)
+  score       Int?
+  passed      Boolean?
+  startedAt   DateTime      @default(now())
+  submittedAt DateTime?
+  examId      String
+  exam        Exam          @relation(fields: [examId], references: [id], onDelete: Cascade)
+  studentId   String
+  student     User          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  answers     ExamAnswer[]
+}
+
+model ExamAnswer {
+  id           String   @id @default(cuid())
+  textAnswer   String?
+  isCorrect    Boolean  @default(false)
+  pointsAwarded Int     @default(0)
+  attemptId    String
+  attempt      ExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  optionId     String?
+  option       Option?  @relation(fields: [optionId], references: [id], onDelete: SetNull)
+}
+
+model Certificate {
+  id         String            @id @default(cuid())
+  code       String            @unique
+  status     CertificateStatus @default(EMITIDO)
+  issuedAt   DateTime          @default(now())
+  studentId  String
+  student    User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId   String
+  course     Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  studentId String
+  student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  read      Boolean  @default(false)
+  href      String?
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
