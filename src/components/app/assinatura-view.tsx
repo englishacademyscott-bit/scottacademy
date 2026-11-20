@@ -338,12 +338,10 @@ export function AssinaturaView({
           </Card>
         ) : null}
 
-        <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+        <div className="flex items-start gap-3 rounded-xl border border-brand-200 bg-brand-500/10 p-4 text-sm text-brand-700 dark:border-brand-500/30 dark:text-brand-300">
+          <Check className="mt-0.5 h-4 w-4 shrink-0" />
           <p>
-            <strong className="font-semibold">Pagamento configurável.</strong> Quando o Mercado Pago está
-            habilitado, a assinatura só é ativada após a confirmação do provedor. Neste ambiente, o modo de
-            demonstração pode estar ativo e não gera cobrança real.
+            <strong className="font-semibold">Assinatura segura.</strong> Você pode alterar seu plano ou gerenciar a renovação a qualquer momento diretamente nesta página.
           </p>
         </div>
       </div>

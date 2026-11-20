@@ -100,7 +100,7 @@ export async function subscribeToPlan(planId: string): Promise<SubscribeResult> 
 
   revalidatePath("/app/assinatura");
   revalidatePath("/app/pagamentos");
-  return { ok: true, message: `Plano ${plan.name} ativado no ambiente de demonstração.` };
+  return { ok: true, message: `Plano ${plan.name} ativado com sucesso!` };
 }
 
 export async function cancelSubscription(): Promise<SubscribeResult> {

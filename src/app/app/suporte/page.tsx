@@ -38,7 +38,7 @@ const FAQ = [
   {
     question: "Os pagamentos são processados por quais meios?",
     answer:
-      "A plataforma aceita o checkout do Mercado Pago quando configurado. Em instalações de demonstração, nenhuma cobrança real é realizada.",
+      "Você pode contratar ou alterar seu plano na página “Assinatura”, com acompanhamento completo das faturas e comprovantes na área “Pagamentos”.",
   },
   {
     question: "Esqueci minha senha. Como recupero?",
@@ -49,8 +49,8 @@ const FAQ = [
 
 export default async function SuportePage() {
   const user = await requireUser();
-  const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
-  const supportWhatsApp = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP;
+  const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "englishacademyscott@gmail.com";
+  const supportWhatsApp = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || "5515998229592";
   const tickets = user.role === "ADMIN" ? await prisma.notification.findMany({ where: { userId: user.id, title: { startsWith: "Suporte [" } }, orderBy: { createdAt: "desc" }, take: 50 }) : [];
 
   return (
