@@ -162,7 +162,7 @@ async function main() {
     data: {
       name: "Pro Anual",
       slug: "pro-anual",
-      description: "Pro com 2 meses grátis. Melhor custo-benefício.",
+      description: "Acesso Pro por 12 meses, com valor anual apresentado antes da contratação.",
       priceCents: 149000,
       interval: PlanInterval.ANUAL,
       features: ["Tudo do plano Pro", "2 meses de cortesia", "Preço travido"],
@@ -245,7 +245,7 @@ async function main() {
     data: {
       slug: "preparacao-ielts",
       title: "Preparação IELTS",
-      subtitle: "Nota 7+ garantida ou a gente devolve",
+      subtitle: "Preparação estruturada para avançar no IELTS",
       description: "Preparação intensiva para o IELTS com foco nas quatro habilidades, escrita task 1 e 2, e simulados semanais.",
       coverUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80",
       category: "Certificação",

@@ -2,6 +2,9 @@ import { requireUser } from "@/lib/guards";
 import { SectionHeader } from "@/components/ui/primitives";
 import { SupportContact } from "@/components/app/suporte-view";
 import { BookOpen, ChevronDown, LifeBuoy, Mail, MessageCircle, Phone } from "lucide-react";
+import { prisma } from "@/lib/prisma";
+import { Button } from "@/components/ui/button";
+import { replySupportMessage } from "./actions";
 
 export const metadata = { title: "Suporte" };
 export const dynamic = "force-dynamic";
@@ -10,7 +13,7 @@ const FAQ = [
   {
     question: "Como funciona o acesso às aulas ao vivo?",
     answer:
-      "As aulas ao vivo acontecem em horário fixo, aparecem na sua agenda e o link de acesso fica disponível 15 minutos antes do início. Se você perder a chamada, a gravação é publicada na biblioteca em até 48 horas.",
+      "As aulas ao vivo aparecem na sua agenda. Quando a equipe cadastrar o link da reunião ou a gravação, ele fica disponível nos detalhes da aula.",
   },
   {
     question: "Perdi o acesso a uma prova. O que faço?",
@@ -20,32 +23,35 @@ const FAQ = [
   {
     question: "Como recebo o certificado de conclusão?",
     answer:
-      "O certificado é emitido automaticamente quando você conclui todos os módulos de um curso com 60% ou mais de aproveitamento. Ele fica disponível na área “Certificados” e pode ser baixado em PDF.",
+      "O certificado é emitido automaticamente quando você conclui 100% das aulas publicadas do curso. Ele fica disponível na área “Certificados” e pode ser impresso ou salvo em PDF pelo navegador.",
   },
   {
     question: "Posso trocar de plano ou cancelar a assinatura?",
     answer:
-      "Sim. Na página “Assinatura” você troca de plano a qualquer momento e cancela quando quiser — você continua com o acesso até o fim do período já pago. Não há fidelidade nem taxa de cancelamento.",
+      "Na página “Assinatura”, você pode consultar seu plano, solicitar o cancelamento ou escolher outro plano. As condições aplicáveis aparecem antes da confirmação.",
   },
   {
     question: "Como funciona a correção das redações?",
     answer:
-      "Cada prova escrita em texto livre é enviada ao professor responsável pelo curso. Você recebe um feedback por notificação com os pontos atribuídos e as sugestões de melhoria, geralmente em até 5 dias úteis.",
+      "Cada resposta em texto livre fica pendente para o professor responsável pelo curso. Quando a correção for registrada, você recebe uma notificação com a pontuação e o feedback.",
   },
   {
     question: "Os pagamentos são processados por quais meios?",
     answer:
-      "Aceitamos cartão de crédito, Pix e boleto. O boleto é compensado em até 3 dias úteis e o acesso é liberado assim que a confirmação acontece.",
+      "A plataforma aceita o checkout do Mercado Pago quando configurado. Em instalações de demonstração, nenhuma cobrança real é realizada.",
   },
   {
     question: "Esqueci minha senha. Como recupero?",
     answer:
-      "Na tela de login, use o link “Esqueci minha senha”. Você recebe um e-mail com o link de redefinição. Se o e-mail não chegar em alguns minutos, verifique o spam ou fale com o suporte.",
+      "Use o link “Esqueci minha senha” na tela de login. O link de redefinição expira em 30 minutos e deixa de funcionar após a troca.",
   },
 ];
 
 export default async function SuportePage() {
-  await requireUser();
+  const user = await requireUser();
+  const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
+  const supportWhatsApp = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP;
+  const tickets = user.role === "ADMIN" ? await prisma.notification.findMany({ where: { userId: user.id, title: { startsWith: "Suporte [" } }, orderBy: { createdAt: "desc" }, take: 50 }) : [];
 
   return (
     <div className="space-y-8">
@@ -86,27 +92,27 @@ export default async function SuportePage() {
               <h2 className="text-base font-bold tracking-tight text-default">Canais de atendimento</h2>
             </div>
             <ul className="mt-4 space-y-3 text-sm">
-              <li className="flex items-start gap-3">
+              {supportEmail ? <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-subtle" />
                 <div>
                   <p className="font-medium text-default">E-mail</p>
-                  <a href="mailto:suporte@scottenglish.com.br" className="text-brand-600 hover:underline dark:text-brand-300">
-                    suporte@scottenglish.com.br
+                  <a href={`mailto:${supportEmail}`} className="text-brand-600 hover:underline dark:text-brand-300">
+                    {supportEmail}
                   </a>
                 </div>
-              </li>
-              <li className="flex items-start gap-3">
+              </li> : null}
+              {supportWhatsApp ? <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-subtle" />
                 <div>
                   <p className="font-medium text-default">WhatsApp</p>
-                  <p className="text-muted">+55 11 4002-8922 · seg a sex, 9h às 18h</p>
+                  <a href={`https://wa.me/${supportWhatsApp.replace(/\D/g, "")}`} className="text-brand-600 hover:underline dark:text-brand-300">Falar pelo WhatsApp</a>
                 </div>
-              </li>
+              </li> : null}
               <li className="flex items-start gap-3">
                 <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-subtle" />
                 <div>
-                  <p className="font-medium text-default">Formulário abaixo</p>
-                  <p className="text-muted">Respondemos em até 1 dia útil.</p>
+                  <p className="font-medium text-default">Formulário de suporte</p>
+                  <p className="text-muted">Envie sua solicitação e guarde o número do protocolo.</p>
                 </div>
               </li>
             </ul>
@@ -115,6 +121,18 @@ export default async function SuportePage() {
           <SupportContact />
         </aside>
       </div>
+      {user.role === "ADMIN" ? <section className="space-y-3" aria-labelledby="tickets-title">
+        <h2 id="tickets-title" className="text-lg font-bold text-default">Solicitações recebidas</h2>
+        {tickets.length === 0 ? <p className="text-sm text-muted">Nenhuma solicitação pendente.</p> : tickets.map((ticket) => {
+          const protocol = ticket.title.match(/\[([^\]]+)\]/)?.[1] ?? ticket.id;
+          const userId = ticket.body.match(/\[usuário:([^\]]+)\]/)?.[1] ?? "";
+          return <article key={ticket.id} className="rounded-xl border border-subtle bg-surface p-4 shadow-soft">
+            <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="font-semibold text-default">{ticket.title}</h3><span className="text-xs text-muted">{ticket.createdAt.toLocaleString("pt-BR")}</span></div>
+            <p className="mt-2 whitespace-pre-wrap text-sm text-muted">{ticket.body.replace(/ \[usuário:[^\]]+\]/, "")}</p>
+            {userId ? <form action={replySupportMessage} className="mt-3 flex flex-col gap-2 sm:flex-row"><input type="hidden" name="ticket" value={protocol}/><input type="hidden" name="userId" value={userId}/><textarea name="message" required minLength={3} placeholder="Resposta ao aluno" className="min-h-20 flex-1 rounded-lg border border-subtle bg-surface px-3 py-2 text-sm"/><Button type="submit">Responder</Button></form> : null}
+          </article>;
+        })}
+      </section> : null}
     </div>
   );
 }

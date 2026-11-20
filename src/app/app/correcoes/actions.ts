@@ -74,23 +74,23 @@ export async function gradeAnswer(input: unknown): Promise<GradeResult> {
     },
   });
 
-  const hasFeedback = Boolean(feedback && feedback.length > 0);
-  if (hasFeedback) {
-    const href = `/app/provas/resultado/${answer.attemptId}`;
+  const feedbackBody = feedback?.trim() || "Correção registrada pelo professor.";
+  {
+    const href = `/app/provas/resultado/${answer.attemptId}?resposta=${answer.id}`;
     const existing = await prisma.notification.findFirst({
       where: { userId: answer.attempt.studentId, href },
     });
     if (existing) {
       await prisma.notification.update({
         where: { id: existing.id },
-        data: { title: `Correção: ${answer.question.exam.title}`, body: feedback!, read: false },
+        data: { title: `Correção: ${answer.question.exam.title}`, body: feedbackBody, read: false },
       });
     } else {
       await prisma.notification.create({
         data: {
           userId: answer.attempt.studentId,
           title: `Correção: ${answer.question.exam.title}`,
-          body: feedback!,
+          body: feedbackBody,
           href,
           read: false,
         },

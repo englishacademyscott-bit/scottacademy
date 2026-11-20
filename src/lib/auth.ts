@@ -9,10 +9,47 @@ const credentialsSchema = z.object({
   password: z.string().min(6),
 });
 
+// Hash fictício usado quando o e-mail não existe, para que a comparação do
+// bcrypt sempre ocorra e o tempo de resposta não revele se a conta existe.
+const DUMMY_PASSWORD_HASH = "$2a$12$VvQB5u2nsZ.JIMwigME23uK7UiZDFyrzEqlpLvZQ3eNbjCarA2rPC";
+
+const useSecureCookies = (process.env.APP_URL ?? "").startsWith("https://");
+const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
   secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt", maxAge: 60 * 60 * 24 * 7 },
+  useSecureCookies,
+  cookies: {
+    sessionToken: {
+      name: `${cookiePrefix}authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+    callbackUrl: {
+      name: `${cookiePrefix}authjs.callback-url`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+    csrfToken: {
+      name: `${useSecureCookies ? "__Host-" : ""}authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+  },
   pages: {
     signIn: "/login",
     error: "/login",
@@ -31,13 +68,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const user = await prisma.user.findUnique({
           where: { email: parsed.data.email.toLowerCase() },
         });
-        if (!user) return null;
 
         const valid = await bcrypt.compare(
           parsed.data.password,
-          user.passwordHash,
+          user?.passwordHash ?? DUMMY_PASSWORD_HASH,
         );
-        if (!valid) return null;
+        if (!user || !valid) return null;
 
         return {
           id: user.id,

@@ -23,6 +23,7 @@ const restrictions = {
   "/app/biblioteca": ["ADMIN", "EDITOR", "PROFESSOR"],
   "/app/alunos": ["ADMIN", "PROFESSOR"],
   "/app/correcoes": ["ADMIN", "PROFESSOR"],
+  "/app/gestao-conteudo": ["ADMIN", "EDITOR", "PROFESSOR"],
 };
 function staticPages(dir, segments = []) {
   return readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
@@ -39,7 +40,7 @@ function record(role, route, status, errors = [], finalPath = route) {
 }
 try {
   const anonymous = await request.newContext({ baseURL: BASE });
-  for (const route of ["/", "/login", "/cadastro", "/offline", "/api/health", "/api/auth/csrf", "/manifest.webmanifest", "/sw.js"]) {
+  for (const route of ["/", "/sobre", "/login", "/cadastro", "/recuperar-senha", "/termos", "/privacidade", "/offline", "/api/health", "/api/auth/csrf", "/manifest.webmanifest", "/sw.js"]) {
     const response = await anonymous.get(route);
     record("PUBLICO", route, response.status(), response.status() === 200 ? [] : ["Esperado HTTP 200"]);
   }

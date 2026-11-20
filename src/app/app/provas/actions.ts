@@ -5,13 +5,6 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/guards";
 
-/**
- * Critério objetivo para respostas em texto livre.
- * Uma resposta em texto é considerada correta quando tem pelo menos
- * este número de caracteres (sem espaços nas pontas).
- */
-const MIN_FREE_TEXT_CHARS = 30;
-
 /* ------------------------------------------------------------------ */
 /* Schemas (Zod)                                                       */
 /* ------------------------------------------------------------------ */
@@ -57,6 +50,9 @@ export type SubmitAttemptResult =
  */
 export async function startAttempt(examId: string): Promise<StartAttemptResult> {
   const user = await requireUser();
+  if (user.role !== "ALUNO") {
+    return { ok: false, error: "Apenas alunos podem realizar provas." };
+  }
 
   if (!examId || typeof examId !== "string") {
     return { ok: false, error: "Prova inválida." };
@@ -64,7 +60,7 @@ export async function startAttempt(examId: string): Promise<StartAttemptResult> 
 
   const exam = await prisma.exam.findUnique({
     where: { id: examId },
-    select: { id: true, title: true, published: true, maxAttempts: true },
+    select: { id: true, title: true, published: true, maxAttempts: true, courseId: true },
   });
 
   if (!exam) {
@@ -75,32 +71,50 @@ export async function startAttempt(examId: string): Promise<StartAttemptResult> 
     return { ok: false, error: "Esta prova ainda não está disponível." };
   }
 
-  const attempts = await prisma.examAttempt.findMany({
-    where: { examId: exam.id, studentId: user.id },
-    select: { id: true, status: true, startedAt: true },
-    orderBy: { startedAt: "desc" },
-  });
-
-  // Retoma a tentativa em andamento (botão "Continuar prova").
-  const emAndamento = attempts.find((a) => a.status === "EM_ANDAMENTO");
-  if (emAndamento) {
-    return { ok: true, attemptId: emAndamento.id, resumed: true };
+  if (exam.courseId) {
+    const enrollment = await prisma.enrollment.findUnique({
+      where: { studentId_courseId: { studentId: user.id, courseId: exam.courseId } },
+      select: { status: true },
+    });
+    if (!enrollment || enrollment.status === "CANCELADO") {
+      return { ok: false, error: "Inscreva-se no curso para realizar esta prova." };
+    }
   }
 
-  if (attempts.length >= exam.maxAttempts) {
-    return {
-      ok: false,
-      error: "Você já utilizou todas as tentativas desta prova.",
-    };
+  let attempt: { id: string; resumed: boolean } | null = null;
+  for (let retry = 0; retry < 2; retry += 1) {
+    try {
+      attempt = await prisma.$transaction(async (tx) => {
+        const attempts = await tx.examAttempt.findMany({
+          where: { examId: exam.id, studentId: user.id },
+          select: { id: true, status: true, startedAt: true },
+          orderBy: { startedAt: "desc" },
+        });
+
+        const emAndamento = attempts.find((item) => item.status === "EM_ANDAMENTO");
+        if (emAndamento) return { id: emAndamento.id, resumed: true };
+        if (attempts.length >= exam.maxAttempts) return null;
+
+        const created = await tx.examAttempt.create({
+          data: { examId: exam.id, studentId: user.id, status: "EM_ANDAMENTO" },
+          select: { id: true },
+        });
+        return { id: created.id, resumed: false };
+      }, { isolationLevel: "Serializable" });
+      break;
+    } catch (error) {
+      const code = (error as { code?: string }).code;
+      if (code !== "P2034" || retry === 1) throw error;
+    }
   }
 
-  const attempt = await prisma.examAttempt.create({
-    data: { examId: exam.id, studentId: user.id, status: "EM_ANDAMENTO" },
-  });
+  if (!attempt) {
+    return { ok: false, error: "Você já utilizou todas as tentativas desta prova." };
+  }
 
   revalidatePath("/app/provas");
 
-  return { ok: true, attemptId: attempt.id, resumed: false };
+  return { ok: true, attemptId: attempt.id, resumed: attempt.resumed };
 }
 
 /* ------------------------------------------------------------------ */
@@ -116,6 +130,9 @@ export async function submitAttempt(
   answers: AttemptAnswerInput[],
 ): Promise<SubmitAttemptResult> {
   const user = await requireUser();
+  if (user.role !== "ALUNO") {
+    return { ok: false, error: "Apenas alunos podem enviar provas." };
+  }
 
   const parsed = submitSchema.safeParse({ examId, answers });
   if (!parsed.success) {
@@ -169,6 +186,23 @@ export async function submitAttempt(
     return { ok: false, error: "Não há prova em andamento para enviar." };
   }
 
+  const deadline = attempt.startedAt.getTime() + attempt.exam.timeLimitMin * 60_000;
+  const expired = Date.now() > deadline + 5_000;
+  if (attempt.exam.courseId) {
+    const enrollment = await prisma.enrollment.findUnique({
+      where: {
+        studentId_courseId: {
+          studentId: user.id,
+          courseId: attempt.exam.courseId,
+        },
+      },
+      select: { status: true },
+    });
+    if (!enrollment || enrollment.status === "CANCELADO") {
+      return { ok: false, error: "Sua inscrição neste curso não está ativa." };
+    }
+  }
+
   const byQuestion = new Map(
     parsed.data.answers.map((a) => [a.questionId, a] as const),
   );
@@ -179,7 +213,8 @@ export async function submitAttempt(
   const registros = attempt.exam.questions.map((question) => {
     pontosTotais += question.points;
 
-    const dada = byQuestion.get(question.id);
+    // Depois do prazo, encerra a tentativa sem aceitar alterações tardias.
+    const dada = expired ? undefined : byQuestion.get(question.id);
     let isCorrect = false;
     let pointsAwarded = 0;
     let optionId: string | null = null;
@@ -189,11 +224,7 @@ export async function submitAttempt(
       if (question.type === "TEXTO_LIVRE") {
         const texto = (dada.textAnswer ?? "").trim();
         textAnswer = texto.length > 0 ? texto : null;
-        // Correção objetiva: mínimo de caracteres define o acerto.
-        if (texto.length >= MIN_FREE_TEXT_CHARS) {
-          isCorrect = true;
-          pointsAwarded = question.points;
-        }
+        // Respostas abertas começam sem pontuação e aguardam correção humana.
       } else if (dada.optionId) {
         const option = question.options.find((o) => o.id === dada.optionId);
         if (option) {

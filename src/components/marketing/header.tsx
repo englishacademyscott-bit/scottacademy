@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Flag,
   Menu,
   Moon,
   Sun,
@@ -18,7 +18,7 @@ const NAV_LINKS = [
   { href: "#cursos", label: "Cursos" },
   { href: "#aulas", label: "Aulas ao vivo" },
   { href: "#planos", label: "Planos" },
-  { href: "#depoimentos", label: "Depoimentos" },
+  { href: "/sobre", label: "Sobre" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -47,10 +47,13 @@ export function MarketingHeader({
           className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-none"
           aria-label="Scott English Academy — página inicial"
         >
-          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl gradient-brand shadow-glow transition-transform duration-300 group-hover:scale-105">
-            <Flag className="h-4.5 w-4.5 text-white" aria-hidden="true" />
-            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-pop-400 ring-2 ring-canvas" />
-          </span>
+          <Image
+            src="/icons/icon-96.png"
+            alt=""
+            width={38}
+            height={38}
+            className="h-9.5 w-9.5 shrink-0 rounded-full shadow-soft transition-transform duration-300 group-hover:scale-105"
+          />
           <span className="flex flex-col leading-none">
             <span className="text-sm font-bold tracking-tight text-default">
               Scott English Academy

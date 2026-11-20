@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+audit
+backups
+*.log
+.env
+tsconfig.tsbuildinfo
+

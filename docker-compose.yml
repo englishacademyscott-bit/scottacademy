@@ -17,5 +17,25 @@ services:
       timeout: 5s
       retries: 20
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: academia-plataforma:latest
+    container_name: academia-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://academia:academia@db:5432/academia?schema=public"
+      AUTH_SECRET: "${AUTH_SECRET:-dev-secret-troque-em-producao-0123456789abcdef0123456789}"
+      AUTH_TRUST_HOST: "true"
+      APP_URL: "http://localhost:3000"
+      PAYMENT_PROVIDER: "${PAYMENT_PROVIDER:-demo}"
+      NEXT_PUBLIC_APP_NAME: "Scott English Academy"
+    ports:
+      - "3000:3000"
+
 volumes:
   academia_pgdata:

@@ -17,7 +17,10 @@ const profileSchema = z.object({
 
 const passwordSchema = z.object({
   currentPassword: z.string().min(1, "Informe a senha atual."),
-  newPassword: z.string().min(6, "A nova senha precisa de ao menos 6 caracteres.").max(100),
+  newPassword: z.string()
+    .min(6, "A nova senha precisa de ao menos 6 caracteres.")
+    .max(72, "A nova senha pode ter até 72 caracteres.")
+    .refine((value) => Buffer.byteLength(value, "utf8") <= 72, "Use uma senha de até 72 bytes."),
 });
 
 export async function updateProfile(input: unknown): Promise<ConfigResult> {

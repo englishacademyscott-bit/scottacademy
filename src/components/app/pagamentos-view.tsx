@@ -252,7 +252,7 @@ export function PagamentosView({ rows, isAdmin }: { rows: PagamentoRow[]; isAdmi
                   <Button
                     variant="ghost"
                     size="icon-sm"
-                    aria-label={`Estornar pagamento ${row.reference}`}
+                    aria-label={`Registrar reembolso do pagamento ${row.reference}`}
                     onClick={() => setRefundTarget(row)}
                   >
                     <ArrowDownLeft className="h-4 w-4 text-cherry-500" />
@@ -264,14 +264,14 @@ export function PagamentosView({ rows, isAdmin }: { rows: PagamentoRow[]; isAdmi
         ))}
       </div>
 
-      {/* Confirmação de estorno */}
+      {/* Confirmação do registro de reembolso */}
       <Dialog open={Boolean(refundTarget)} onOpenChange={(open) => !open && setRefundTarget(null)}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Estornar este pagamento?</DialogTitle>
+            <DialogTitle>Registrar este pagamento como reembolsado?</DialogTitle>
             <DialogDescription>
               O pagamento de {refundTarget ? formatCurrency(refundTarget.amountCents) : ""} (
-              {refundTarget?.reference}) passará para “Reembolsado”. Esta ação não pode ser desfeita.
+              {refundTarget?.reference}) passará para “Reembolsado” apenas no histórico da plataforma. Faça ou confirme a devolução no provedor de pagamento antes de continuar.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -279,7 +279,7 @@ export function PagamentosView({ rows, isAdmin }: { rows: PagamentoRow[]; isAdmi
               Cancelar
             </Button>
             <Button variant="destructive" onClick={handleRefund} disabled={refunding}>
-              {refunding ? "Estornando…" : "Confirmar estorno"}
+              {refunding ? "Registrando…" : "Confirmar registro"}
             </Button>
           </DialogFooter>
         </DialogContent>

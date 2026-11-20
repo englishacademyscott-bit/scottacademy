@@ -52,6 +52,7 @@ export default async function RealizarProvaPage({
       passingPercent: true,
       shuffleQuestions: true,
       maxAttempts: true,
+      courseId: true,
       questions: {
         select: {
           id: true,
@@ -71,6 +72,16 @@ export default async function RealizarProvaPage({
   });
 
   if (!exam || !exam.published) notFound();
+  if (user.role !== "ALUNO") redirect(`/app/provas/${exam.id}`);
+  if (exam.courseId) {
+    const enrollment = await prisma.enrollment.findUnique({
+      where: { studentId_courseId: { studentId: user.id, courseId: exam.courseId } },
+      select: { status: true },
+    });
+    if (!enrollment || enrollment.status === "CANCELADO") {
+      redirect(`/app/cursos`);
+    }
+  }
 
   // A tentativa só é criada pela ação explícita de começar a prova.
   let attemptId: string | null = null;

@@ -1,7 +1,7 @@
 {
   "mode": "browser",
-  "total": 132,
-  "passed": 132,
+  "total": 140,
+  "passed": 140,
   "failed": 0,
   "results": [
     {
@@ -9,6 +9,14 @@
       "route": "/",
       "status": 200,
       "finalPath": "/",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/sobre",
+      "status": 200,
+      "finalPath": "/sobre",
       "errors": [],
       "ok": true
     },
@@ -25,6 +33,30 @@
       "route": "/cadastro",
       "status": 200,
       "finalPath": "/cadastro",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/recuperar-senha",
+      "status": 200,
+      "finalPath": "/recuperar-senha",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/termos",
+      "status": 200,
+      "finalPath": "/termos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PUBLICO",
+      "route": "/privacidade",
+      "status": 200,
+      "finalPath": "/privacidade",
       "errors": [],
       "ok": true
     },
@@ -161,6 +193,14 @@
       "route": "/app/cursos",
       "status": 200,
       "finalPath": "/app/cursos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ALUNO",
+      "route": "/app/gestao-conteudo",
+      "status": 200,
+      "finalPath": "/app",
       "errors": [],
       "ok": true
     },
@@ -414,6 +454,14 @@
     },
     {
       "role": "PROFESSOR",
+      "route": "/app/gestao-conteudo",
+      "status": 200,
+      "finalPath": "/app/gestao-conteudo",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "PROFESSOR",
       "route": "/app/notificacoes",
       "status": 200,
       "finalPath": "/app/notificacoes",
@@ -649,6 +697,14 @@
       "route": "/app/cursos",
       "status": 200,
       "finalPath": "/app/cursos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "EDITOR",
+      "route": "/app/gestao-conteudo",
+      "status": 200,
+      "finalPath": "/app/gestao-conteudo",
       "errors": [],
       "ok": true
     },
@@ -889,6 +945,14 @@
       "route": "/app/cursos",
       "status": 200,
       "finalPath": "/app/cursos",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "role": "ADMIN",
+      "route": "/app/gestao-conteudo",
+      "status": 200,
+      "finalPath": "/app/gestao-conteudo",
       "errors": [],
       "ok": true
     },

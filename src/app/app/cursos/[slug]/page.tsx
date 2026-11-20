@@ -548,7 +548,7 @@ export default async function CourseDetailPage({
           {
             icon: Award,
             title: "Certificado de conclusão",
-            text: "Ao concluir 100% das aulas você recebe um certificado verificável.",
+            text: "Ao concluir 100% das aulas você recebe um certificado com código de registro.",
           },
           {
             icon: CalendarClock,

@@ -41,12 +41,11 @@ export default async function BibliotecaPage({
     orderBy: { title: "asc" },
   });
   const courseIds = courses.map((c) => c.id);
+  const selectedCourseId = courseIds.includes(curso) ? curso : "";
 
-  const moduleFilter: Prisma.ModuleWhereInput = curso
-    ? { courseId: curso }
-    : courseIds.length
-      ? { courseId: { in: courseIds } }
-      : { courseId: "__none__" };
+  const moduleFilter: Prisma.ModuleWhereInput = {
+    courseId: selectedCourseId || (courseIds.length ? { in: courseIds } : "__none__"),
+  };
 
   const where: Prisma.LessonWhereInput = {
     module: moduleFilter,
@@ -124,7 +123,7 @@ export default async function BibliotecaPage({
             {
               name: "curso",
               label: "Todos os cursos",
-              value: curso,
+              value: selectedCourseId,
               options: courses.map((c) => ({ value: c.id, label: c.title })),
             },
             {

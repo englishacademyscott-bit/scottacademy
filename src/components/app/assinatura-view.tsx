@@ -110,8 +110,10 @@ export function AssinaturaView({
     setBusyPlan(plan.id);
     const result = await subscribeToPlan(plan.id);
     setBusyPlan(null);
-    if (result.ok) toast.success(result.message);
-    else toast.error(result.error);
+    if (result.ok) {
+      toast.success(result.message);
+      if (result.redirectUrl) window.location.assign(result.redirectUrl);
+    } else toast.error(result.error);
   };
 
   const handleCancel = async () => {
@@ -339,9 +341,9 @@ export function AssinaturaView({
         <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
           <p>
-            <strong className="font-semibold">Ambiente de demonstração.</strong> Não há gateway de pagamento
-            integrado: a assinatura é registrada localmente e um pagamento é marcado como pago para fins de
-            teste. Nenhuma cobrança real é feita.
+            <strong className="font-semibold">Pagamento configurável.</strong> Quando o Mercado Pago está
+            habilitado, a assinatura só é ativada após a confirmação do provedor. Neste ambiente, o modo de
+            demonstração pode estar ativo e não gera cobrança real.
           </p>
         </div>
       </div>
@@ -394,7 +396,7 @@ export function AssinaturaView({
           <div className="px-6">
             <p className="flex items-start gap-2 rounded-lg border border-subtle bg-sunken p-3 text-xs text-muted">
               <CalendarClock className="mt-0.5 h-4 w-4 shrink-0" />
-              Nenhum valor será cobrado e os pagamentos já realizados não são reembolsados.
+              O cancelamento interrompe futuras renovações. Eventuais reembolsos seguem as condições da compra e a legislação aplicável.
             </p>
           </div>
           <DialogFooter>

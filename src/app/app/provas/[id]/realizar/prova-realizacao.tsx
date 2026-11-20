@@ -204,11 +204,16 @@ export function ProvaRealizacao({
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const [mapOpen, setMapOpen] = React.useState(false);
   const [announcement, setAnnouncement] = React.useState("");
+  const storageKey = React.useMemo(
+    () => `sea:prova:${examId}:${startedAt}`,
+    [examId, startedAt],
+  );
 
   const submittingRef = React.useRef(false);
   const submittedRef = React.useRef(false);
   const submitRef = React.useRef<() => void>(() => undefined);
   const announcedRef = React.useRef<number[]>([]);
+  const restoredRef = React.useRef(false);
 
   const question = questions[current];
   const total = questions.length;
@@ -228,6 +233,36 @@ export function ProvaRealizacao({
   );
   const respondidas = answeredIds.size;
   const naoRespondidas = questions.filter((q) => !answeredIds.has(q.id));
+
+  React.useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved) as {
+          answers?: Record<string, string>;
+          textAnswers?: Record<string, string>;
+          current?: number;
+        };
+        if (parsed.answers) setAnswers(parsed.answers);
+        if (parsed.textAnswers) setTextAnswers(parsed.textAnswers);
+        if (typeof parsed.current === "number") {
+          setCurrent(Math.max(0, Math.min(parsed.current, questions.length - 1)));
+        }
+      }
+    } catch {
+      window.localStorage.removeItem(storageKey);
+    } finally {
+      restoredRef.current = true;
+    }
+  }, [questions.length, storageKey]);
+
+  React.useEffect(() => {
+    if (!restoredRef.current || submitted) return;
+    window.localStorage.setItem(
+      storageKey,
+      JSON.stringify({ answers, textAnswers, current }),
+    );
+  }, [answers, current, storageKey, submitted, textAnswers]);
 
   /* ---------------------------- envio ---------------------------- */
 
@@ -254,10 +289,12 @@ export function ProvaRealizacao({
       }
       submittedRef.current = true;
       setSubmitted(true);
+      window.localStorage.removeItem(storageKey);
+      const hasOpenAnswers = questions.some((q) => q.type === "TEXTO_LIVRE");
       toast.success("Prova enviada!", {
-        description: `Sua nota foi ${res.score}% — ${
-          res.passed ? "aprovado" : "reprovado"
-        }.`,
+        description: hasOpenAnswers
+          ? `Resultado provisório: ${res.score}%. As respostas abertas aguardam correção.`
+          : `Sua nota foi ${res.score}% — ${res.passed ? "aprovado" : "reprovado"}.`,
       });
       router.push(`/app/provas/resultado/${res.attemptId}`);
     } catch {
@@ -267,7 +304,7 @@ export function ProvaRealizacao({
       submittingRef.current = false;
       setSubmitting(false);
     }
-  }, [answers, textAnswers, examId, questions, router]);
+  }, [answers, textAnswers, examId, questions, router, storageKey]);
 
   React.useEffect(() => {
     submitRef.current = () => {

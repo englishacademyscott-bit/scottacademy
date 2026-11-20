@@ -253,7 +253,7 @@ function CertificateCard({
             <div className="flex flex-col items-center gap-3 border-t border-sun-400/25 pt-4 sm:flex-row sm:justify-between sm:text-left">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-300">
-                  Código de verificação
+                  Código de registro
                 </p>
                 <p className="font-mono text-xs font-semibold text-sun-200">{code}</p>
               </div>

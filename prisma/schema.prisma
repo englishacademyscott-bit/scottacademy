@@ -372,3 +372,13 @@ model Notification {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+/// Contadores de tentativas de login (conta, origem e chamadas diretas ao
+/// Auth.js), persistidos no banco para funcionar com múltiplas instâncias.
+model LoginAttempt {
+  key             String    @id
+  failures        Int       @default(0)
+  windowStartedAt DateTime  @default(now())
+  blockedUntil    DateTime?
+  updatedAt       DateTime  @updatedAt
+}

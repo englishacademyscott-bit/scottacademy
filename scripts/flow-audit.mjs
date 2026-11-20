@@ -90,6 +90,7 @@ try {
   await check("Nova inscrição preserva o progresso anterior", true);
   await page.goto(BASE + "/app/certificados", { waitUntil: "domcontentloaded" });
   await page.setViewportSize({ width: 320, height: 720 });
+  await page.waitForTimeout(150);
   await check("Certificado renderiza em celular", await page.getByRole("button", { name: "Imprimir", exact: true }).count() === 1 && !await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1));
   await check("Certificado não é duplicado ao revisitar o curso", await prisma.certificate.count({ where: { studentId: userId, courseId: course.id } }) === 1);
   await page.setViewportSize({ width: 1440, height: 1000 });

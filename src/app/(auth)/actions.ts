@@ -5,24 +5,49 @@ import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { signIn } from "@/lib/auth";
 import { safeCallbackUrl } from "@/lib/auth-redirect";
+import {
+  checkLoginLimit,
+  clearLoginFailures,
+  loginOrigin,
+  recordLoginFailure,
+} from "@/lib/login-rate-limit";
 
 export type AuthFormState = { error?: string };
 const emailSchema = z.string().trim().email("Informe um e-mail válido.").max(254).transform(v => v.toLowerCase());
 const passwordSchema = z.string().min(6, "A senha precisa de pelo menos 6 caracteres.").max(72, "A senha pode ter até 72 caracteres.").refine(v => Buffer.byteLength(v, "utf8") <= 72, "Use uma senha de até 72 bytes.");
 
+function blockedMessage(seconds: number) {
+  const minutes = Math.max(1, Math.ceil(seconds / 60));
+  return `Muitas tentativas de acesso. Tente novamente em ${minutes} minuto${minutes === 1 ? "" : "s"}.`;
+}
+
 export async function login(_state: AuthFormState, form: FormData): Promise<AuthFormState> {
   const parsed = z.object({ email: emailSchema, password: passwordSchema }).safeParse({ email: form.get("email"), password: form.get("password") });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Confira os dados informados." };
+  const origin = loginOrigin(await headers());
+  const limit = await checkLoginLimit(parsed.data.email, origin);
+  if (!limit.allowed) return { error: blockedMessage(limit.retryAfterSeconds) };
+
   try {
-    await signIn("credentials", { ...parsed.data, redirectTo: safeCallbackUrl(form.get("callbackUrl")) });
+    // redirect: false evita o redirecionamento automático do signIn, para que
+    // a verificação de credenciais aconteça uma única vez (dentro de authorize()).
+    await signIn("credentials", { ...parsed.data, redirect: false });
   } catch (error) {
-    if (error instanceof AuthError) return { error: error.type === "CredentialsSignin" ? "E-mail ou senha incorretos." : "Não foi possível entrar. Tente novamente em instantes." };
+    if (error instanceof AuthError) {
+      const failure = await recordLoginFailure(parsed.data.email, origin);
+      await new Promise((resolve) => setTimeout(resolve, failure.delayMs));
+      if (failure.retryAfterSeconds > 0) return { error: blockedMessage(failure.retryAfterSeconds) };
+      return { error: "E-mail ou senha incorretos." };
+    }
     throw error;
   }
-  return {};
+
+  await clearLoginFailures(parsed.data.email);
+  redirect(safeCallbackUrl(form.get("callbackUrl")));
 }
 
 export async function register(_state: AuthFormState, form: FormData): Promise<AuthFormState> {

@@ -17,7 +17,11 @@
     "icons": "python scripts/generate_icons.py",
     "audit:responsive": "node scripts/responsive-audit.mjs",
     "audit:routes": "node scripts/route-audit.mjs",
-    "audit:flows": "node scripts/flow-audit.mjs"
+    "audit:flows": "node scripts/flow-audit.mjs",
+    "audit:login-limit": "tsx scripts/login-rate-limit-audit.ts"
+    ,"check:env": "node scripts/verify-env.mjs"
+    ,"backup:db": "powershell -ExecutionPolicy Bypass -File scripts/backup-db.ps1"
+    ,"audit:pwa": "node scripts/pwa-audit.mjs"
   },
   "dependencies": {
     "@eslint/eslintrc": "^3.3.7",
@@ -42,6 +46,7 @@
     "lucide-react": "^0.475.0",
     "next": "^15.5.28",
     "next-auth": "^5.0.0-beta.25",
+    "qrcode": "^1.5.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "recharts": "^2.15.1",
@@ -53,6 +58,7 @@
     "@tailwindcss/postcss": "^4.0.6",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.13.5",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "eslint": "^9.20.1",

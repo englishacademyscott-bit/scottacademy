@@ -64,11 +64,24 @@ export default async function ProvaDetalhePage({
   });
 
   if (!exam || !exam.published) notFound();
+  const canTakeExam =
+    user.role === "ALUNO" &&
+    (!exam.courseId ||
+      Boolean(
+        await prisma.enrollment.findFirst({
+          where: {
+            studentId: user.id,
+            courseId: exam.courseId,
+            status: { not: "CANCELADO" },
+          },
+          select: { id: true },
+        }),
+      ));
 
   const emAndamento = exam.attempts.find((a) => a.status === "EM_ANDAMENTO");
   const concluidas = exam.attempts.filter((a) => a.status === "CONCLUIDA");
   const usadas = exam.attempts.length;
-  const restantes = Math.max(0, exam.maxAttempts - usadas);
+  const restantes = canTakeExam ? Math.max(0, exam.maxAttempts - usadas) : 0;
   const pontosTotais = exam.questions.reduce((acc, q) => acc + q.points, 0);
 
   const tiposPresentes = Array.from(
@@ -324,8 +337,14 @@ export default async function ProvaDetalhePage({
               ) : (
                 <EmptyState
                   icon={RotateCcw}
-                  title="Tentativas esgotadas"
-                  description="Você já usou todas as tentativas disponíveis desta prova."
+                  title={canTakeExam ? "Tentativas esgotadas" : "Prova indisponível"}
+                  description={
+                    canTakeExam
+                      ? "Você já utilizou todas as tentativas disponíveis."
+                      : user.role !== "ALUNO"
+                        ? "A realização de provas está disponível para alunos."
+                        : "Inscreva-se no curso para realizar esta prova."
+                  }
                   className="py-8"
                 />
               )}

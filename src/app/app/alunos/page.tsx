@@ -37,11 +37,12 @@ export default async function AlunosPage({
   });
 
   const visibleCourseIds = courses.map((c) => c.id);
+  const selectedCourseId = visibleCourseIds.includes(courseFilter) ? courseFilter : "";
 
   const enrollmentWhere: Prisma.EnrollmentWhereInput = {
     student: { role: "ALUNO" },
     ...(visibleCourseIds.length > 0 ? { courseId: { in: visibleCourseIds } } : { id: "__none__" }),
-    ...(courseFilter ? { courseId: courseFilter } : {}),
+    ...(selectedCourseId ? { courseId: selectedCourseId } : {}),
   };
 
   const enrollments = await prisma.enrollment.findMany({
@@ -390,7 +391,7 @@ export default async function AlunosPage({
             {
               name: "curso",
               label: "Todos os cursos",
-              value: courseFilter,
+              value: selectedCourseId,
               options: courses.map((c) => ({ value: c.id, label: c.title })),
             },
             {

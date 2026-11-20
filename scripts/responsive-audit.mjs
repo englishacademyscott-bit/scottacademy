@@ -33,6 +33,7 @@ const VIEWPORTS = [
 
 const ROTAS = [
   "/",
+  "/sobre",
   "/login",
   "/cadastro",
   "/app",

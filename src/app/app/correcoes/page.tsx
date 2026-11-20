@@ -36,6 +36,7 @@ export default async function CorrecoesPage({
     orderBy: { title: "asc" },
   });
   const courseIds = courses.map((c) => c.id);
+  const selectedCourseId = courseIds.includes(curso) ? curso : "";
 
   const exams = await prisma.exam.findMany({
     where: courseIds.length ? { courseId: { in: courseIds } } : { courseId: "__none__" },
@@ -57,11 +58,9 @@ export default async function CorrecoesPage({
     orderBy: { name: "asc" },
   });
 
-  const examFilter: Prisma.ExamWhereInput = curso
-    ? { courseId: curso }
-    : courseIds.length
-      ? { courseId: { in: courseIds } }
-      : { courseId: "__none__" };
+  const examFilter: Prisma.ExamWhereInput = {
+    courseId: selectedCourseId || (courseIds.length ? { in: courseIds } : "__none__"),
+  };
 
   const where: Prisma.ExamAttemptWhereInput = {
     status: "CONCLUIDA",
@@ -132,7 +131,7 @@ export default async function CorrecoesPage({
         .sort((a, b) => a.position - b.position);
 
       const pending = answers.some(
-        (a) => a.questionType === "TEXTO_LIVRE" && !a.isCorrect && a.pointsAwarded === 0,
+        (a) => a.questionType === "TEXTO_LIVRE" && !a.feedbackAt,
       );
 
       return {
@@ -192,7 +191,7 @@ export default async function CorrecoesPage({
             {
               name: "curso",
               label: "Todos os cursos",
-              value: curso,
+              value: selectedCourseId,
               options: courses.map((c) => ({ value: c.id, label: c.title })),
             },
             {

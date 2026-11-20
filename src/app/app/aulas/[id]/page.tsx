@@ -244,8 +244,8 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
                 <CardContent>
                   <EmptyState
                     icon={ScrollText}
-                    title="Transcrição em breve"
-                    description="A transcrição automática desta aula estará disponível aqui em uma próxima atualização."
+                    title="Transcrição indisponível"
+                    description="Esta aula ainda não possui uma transcrição cadastrada."
                     className="border-0 bg-transparent py-8"
                   />
                 </CardContent>

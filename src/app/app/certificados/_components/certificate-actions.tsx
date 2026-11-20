@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { Printer, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -57,41 +58,17 @@ export function CertificatePrintButton({ certificateId }: { certificateId: strin
   );
 }
 
-/** QR visual (decorativo) que representa a verificação do certificado. */
+/** QR real para a página pública de validação do certificado. */
 export function CertificateQr({ code }: { code: string }) {
-  // Hash determinístico simples apenas para gerar um padrão visual estável.
-  const cells = React.useMemo(() => {
-    const size = 7;
-    const out: boolean[][] = [];
-    let seed = 0;
-    for (let i = 0; i < code.length; i++) seed = (seed * 31 + code.charCodeAt(i)) % 9973;
-    for (let y = 0; y < size; y++) {
-      const row: boolean[] = [];
-      for (let x = 0; x < size; x++) {
-        seed = (seed * 1103515245 + 12345) % 2147483648;
-        row.push(seed % 100 > 52);
-      }
-      out.push(row);
-    }
-    return out;
-  }, [code]);
-
   return (
-    <div
-      className="grid h-16 w-16 grid-cols-7 gap-px rounded-md bg-white p-1"
-      role="img"
-      aria-label={`Código de verificação ${code}`}
-    >
-      {cells.map((row, y) =>
-        row.map((filled, x) => (
-          <span
-            key={`${x}-${y}`}
-            className={filled ? "bg-ink-900" : "bg-transparent"}
-            aria-hidden
-          />
-        )),
-      )}
-    </div>
+    <Image
+      src={`/api/certificados/${encodeURIComponent(code)}/qr`}
+      alt={`QR para validar o certificado ${code}`}
+      width={64}
+      height={64}
+      unoptimized
+      className="h-16 w-16 rounded-md bg-white p-1"
+    />
   );
 }
 
@@ -99,7 +76,7 @@ export function CertificateVerificationBadge() {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
       <ShieldCheck className="h-3.5 w-3.5" />
-      Verificável
+      Emitido pela plataforma
     </span>
   );
 }

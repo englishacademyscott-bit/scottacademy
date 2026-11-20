@@ -33,7 +33,7 @@ const TYPE_LABEL: Record<string, string> = {
   TEXTO_LIVRE: "Resposta aberta",
 };
 
-function ScoreRing({ score }: { score: number }) {
+function ScoreRing({ score, passingPercent }: { score: number; passingPercent: number }) {
   const radius = 68;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - Math.max(0, Math.min(100, score)) / 100);
@@ -65,7 +65,7 @@ function ScoreRing({ score }: { score: number }) {
           strokeDashoffset={offset}
           className={cn(
             "transition-[stroke-dashoffset] duration-1000 ease-[var(--ease-out-quint)]",
-            score >= 60 ? "stroke-emerald-500" : "stroke-cherry-500",
+            score >= passingPercent ? "stroke-emerald-500" : "stroke-cherry-500",
           )}
         />
       </svg>
@@ -74,7 +74,7 @@ function ScoreRing({ score }: { score: number }) {
           {score}%
         </span>
         <span className="text-xs font-semibold uppercase tracking-wide text-subtle">
-          Sua nota
+          Nota atual
         </span>
       </div>
     </div>
@@ -129,6 +129,26 @@ export default async function ResultadoPage({
   const answered = attempt.answers.filter(
     (a) => a.optionId !== null || (a.textAnswer ?? "").length > 0,
   ).length;
+  const openAnswerIds = attempt.answers
+    .filter((answer) => {
+      const question = exam.questions.find((item) => item.id === answer.questionId);
+      return question?.type === "TEXTO_LIVRE" && Boolean(answer.textAnswer?.trim());
+    })
+    .map((answer) => answer.id);
+  const reviewedOpenAnswers = openAnswerIds.length
+    ? await prisma.notification.findMany({
+        where: {
+          userId: user.id,
+          title: { startsWith: "Correção:" },
+          href: { startsWith: `/app/provas/resultado/${attempt.id}?resposta=` },
+        },
+        select: { href: true },
+      })
+    : [];
+  const reviewedIds = new Set(
+    reviewedOpenAnswers.map((note) => note.href?.split("resposta=")[1]).filter(Boolean),
+  );
+  const hasPendingReview = openAnswerIds.some((id) => !reviewedIds.has(id));
 
   const duracaoSegundos =
     attempt.submittedAt && attempt.startedAt
@@ -171,10 +191,15 @@ export default async function ResultadoPage({
       <header className="rounded-xl border border-subtle bg-surface p-6 shadow-soft sm:p-8">
         <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col items-center gap-5 sm:flex-row">
-            <ScoreRing score={score} />
+            <ScoreRing score={score} passingPercent={exam.passingPercent} />
             <div className="space-y-3 text-center sm:text-left">
               <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-                {isAprovado ? (
+                {hasPendingReview ? (
+                  <Badge variant="warning" className="px-3 py-1 text-sm">
+                    <Clock className="h-4 w-4" />
+                    Aguardando correção
+                  </Badge>
+                ) : isAprovado ? (
                   <Badge variant="success" className="px-3 py-1 text-sm">
                     <CheckCircle2 className="h-4 w-4" />
                     Aprovado
@@ -201,7 +226,9 @@ export default async function ResultadoPage({
               </div>
 
               <p className="text-sm leading-relaxed text-muted">
-                {isAprovado
+                {hasPendingReview
+                  ? "Esta nota é provisória. O resultado será recalculado quando o professor corrigir as respostas abertas."
+                  : isAprovado
                   ? "Parabéns! Você atingiu a nota de corte. Continue avançando no módulo."
                   : "Você não atingiu a nota de corte desta vez. Revise as justificativas abaixo e tente novamente."}
               </p>
