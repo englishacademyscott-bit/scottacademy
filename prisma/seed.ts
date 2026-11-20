@@ -40,6 +40,19 @@ async function main() {
   const hash = await bcrypt.hash(PASSWORD, 10);
 
   // ---------- Usuários ----------
+  const masterHash = await bcrypt.hash("123Scott#", 10);
+  await prisma.user.create({
+    data: {
+      name: "Scott English Academy",
+      email: "englishacademyscott@gmail.com",
+      passwordHash: masterHash,
+      role: Role.ADMIN,
+      bio: "Administrador Master da Scott English Academy.",
+      phone: "+55 11 90000-0000",
+      avatarUrl: null,
+    },
+  });
+
   const scott = await prisma.user.create({
     data: {
       name: "Scott Anderson",
