@@ -18,11 +18,11 @@ BRAND = os.path.join(ROOT, "public", "brand")
 ICONS = os.path.join(ROOT, "public", "icons")
 os.makedirs(ICONS, exist_ok=True)
 
-# Centro e raios exatos do selo em public/brand/profile-512.jpg
-SRC_CX = 260.5
-SRC_CY = 246.5
-OUTER_R = 231.0   # Borda externa do anel branco
-SPLIT_R = 110.0   # Canal azul-marinho entre o brasão central (águia) e o anel de texto ("SCOTT...")
+# Centro e raios exatos do selo em public/brand/profile-512.jpg (1024x1024 HD)
+SRC_CX = 511.5
+SRC_CY = 511.5
+OUTER_R = 466.0   # Borda externa do anel branco
+SPLIT_R = 247.5   # Canal azul-marinho entre o brasão central (águia) e o anel de texto ("SCOTT...")
 NAVY_BG = (11, 25, 52, 255)
 
 
