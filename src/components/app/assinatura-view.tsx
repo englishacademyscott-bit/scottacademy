@@ -257,8 +257,8 @@ export function AssinaturaView({
                       </span>
                     </p>
                   ) : (
-                    <p className="mt-3 text-sm font-semibold text-brand-600 dark:text-brand-300">
-                      Atendimento exclusivo · Consulte nossa equipe
+                    <p className="mt-3 text-xl font-bold text-brand-600 dark:text-brand-300">
+                      Consulte com a nossa equipe
                     </p>
                   )}
                 </CardHeader>

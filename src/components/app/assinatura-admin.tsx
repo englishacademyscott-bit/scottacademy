@@ -77,8 +77,14 @@ export function AssinaturaAdmin({
                     <p className="mt-0.5 text-sm text-muted">{plan.description}</p>
                   </div>
                   <p className="shrink-0 text-sm font-bold text-default">
-                    {formatCurrency(plan.priceCents)}
-                    <span className="text-xs font-medium text-muted">/{INTERVAL_LABEL[plan.interval]}</span>
+                    {plan.priceCents > 0 ? (
+                      <>
+                        {formatCurrency(plan.priceCents)}
+                        <span className="text-xs font-medium text-muted">/{INTERVAL_LABEL[plan.interval]}</span>
+                      </>
+                    ) : (
+                      <span className="text-brand-600 dark:text-brand-300">Consulte com a nossa equipe</span>
+                    )}
                   </p>
                 </div>
                 <ul className="mt-2 flex flex-wrap gap-1.5">
