@@ -1,0 +1,21 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    - cron: "0 8,20 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Production Database via Health Endpoint
+        run: |
+          response=$(curl -sS -w "\n%{http_code}" "https://englishacademyscott.site/api/health?ts=$(date +%s)")
+          body=$(echo "$response" | head -n 1)
+          code=$(echo "$response" | tail -n 1)
+          echo "HTTP Status: $code"
+          echo "Body: $body"
+          if [ "$code" != "200" ]; then
+            exit 1
+          fi
