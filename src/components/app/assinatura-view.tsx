@@ -220,13 +220,14 @@ export function AssinaturaView({
       {/* Grade de planos */}
       <div ref={plansRef} className="space-y-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-default">Todos os planos</h2>
-          <p className="text-sm text-muted">Compare os benefícios e escolha o que combina com você.</p>
+          <h2 className="text-xl font-bold tracking-tight text-default">Planos de aulas ao vivo exclusivas</h2>
+          <p className="text-sm text-muted">Aulas ao vivo, exclusivas por aluno e personalizadas para você conversar e praticar. Para saber mais, entre em contato com a nossa equipe — nosso diferencial faz a diferença no seu aprendizado.</p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2">
           {plans.map((plan) => {
             const isCurrent = plan.id === currentPlanId && isActive;
+            const wppUrl = `https://wa.me/5515998229592?text=${encodeURIComponent(`Olá! Quero saber mais sobre o ${plan.name} de aulas ao vivo exclusivas e personalizadas da Scott English Academy.`)}`;
             return (
               <Card
                 key={plan.id}
@@ -248,12 +249,18 @@ export function AssinaturaView({
                     {isCurrent ? <Badge variant="success">Plano atual</Badge> : null}
                   </CardTitle>
                   <p className="text-sm text-muted">{plan.description}</p>
-                  <p className="mt-3 text-3xl font-bold tracking-tight text-default">
-                    {formatCurrency(plan.priceCents)}
-                    <span className="text-sm font-medium text-muted">
-                      /{INTERVAL_LABEL[plan.interval]}
-                    </span>
-                  </p>
+                  {plan.priceCents > 0 ? (
+                    <p className="mt-3 text-3xl font-bold tracking-tight text-default">
+                      {formatCurrency(plan.priceCents)}
+                      <span className="text-sm font-medium text-muted">
+                        /{INTERVAL_LABEL[plan.interval]}
+                      </span>
+                    </p>
+                  ) : (
+                    <p className="mt-3 text-sm font-semibold text-brand-600 dark:text-brand-300">
+                      Atendimento exclusivo · Consulte nossa equipe
+                    </p>
+                  )}
                 </CardHeader>
 
                 <CardContent className="flex flex-1 flex-col gap-4">
@@ -267,20 +274,13 @@ export function AssinaturaView({
                   </ul>
 
                   <Button
+                    asChild
                     className="w-full"
                     variant={plan.highlight ? "primary" : "secondary"}
-                    disabled={isCurrent || busyPlan === plan.id}
-                    onClick={() => handleSubscribe(plan)}
-              >
-                    {isCurrent ? (
-                      "Plano atual"
-                    ) : busyPlan === plan.id ? (
-                      "Processando…"
-                    ) : (
-                      <>
-                        <CreditCard className="h-4 w-4" /> Assinar {plan.name}
-                      </>
-                    )}
+                  >
+                    <a href={wppUrl} target="_blank" rel="noopener noreferrer">
+                      Falar com a nossa equipe
+                    </a>
                   </Button>
                 </CardContent>
               </Card>

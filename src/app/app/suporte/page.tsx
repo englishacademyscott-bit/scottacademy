@@ -13,7 +13,7 @@ const FAQ = [
   {
     question: "Como funciona o acesso às aulas ao vivo?",
     answer:
-      "As aulas ao vivo aparecem na sua agenda. Quando a equipe cadastrar o link da reunião ou a gravação, ele fica disponível nos detalhes da aula.",
+      "As aulas são ao vivo, exclusivas por aluno e personalizadas para cada aluno conversar e praticar. Elas aparecem na sua agenda com o link de acesso cadastrado pelo professor.",
   },
   {
     question: "Perdi o acesso a uma prova. O que faço?",
@@ -28,7 +28,7 @@ const FAQ = [
   {
     question: "Posso trocar de plano ou cancelar a assinatura?",
     answer:
-      "Na página “Assinatura”, você pode consultar seu plano, solicitar o cancelamento ou escolher outro plano. As condições aplicáveis aparecem antes da confirmação.",
+      "Trabalhamos com 2 planos de aulas ao vivo exclusivas: 1x por semana e 2x por semana. Para saber mais ou ajustar seu plano, entre em contato com a nossa equipe — nosso diferencial faz a diferença no seu aprendizado.",
   },
   {
     question: "Como funciona a correção das redações?",
