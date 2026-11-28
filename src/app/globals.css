@@ -192,8 +192,8 @@ body {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   text-rendering: optimizeLegibility;
   overflow-x: clip;
-  /* evita que inputs com zoom causem scroll em iOS */
-  min-height: 100dvh;
+  /* evita que inputs com zoom ou retorno de apps externos causem tremedeira de viewport (100dvh) */
+  min-height: 100svh;
 }
 
 /* Imagens e mídias nunca estouram o container */
@@ -225,11 +225,11 @@ iframe {
   padding-right: env(safe-area-inset-right, 0px);
 }
 
-/* Alvos de toque com tamanho mínimo acessível (44px) */
+/* Alvos de toque com tamanho mínimo acessível (44px), preservando botões internos de toasts */
 @media (pointer: coarse) {
-  button,
-  [role="button"],
-  a[href],
+  button:not([data-sonner-toast] *):not([data-close-button]),
+  [role="button"]:not([data-sonner-toast] *),
+  a[href]:not([data-sonner-toast] *),
   input[type="checkbox"],
   input[type="radio"] {
     min-height: 44px;

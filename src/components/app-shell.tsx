@@ -26,10 +26,10 @@ export function AppShell({
   }, [mobileOpen]);
 
   return (
-    <div className="flex min-h-dvh bg-canvas">
+    <div className="flex min-h-svh bg-canvas">
       {/* Desktop sidebar */}
       <aside className="hidden w-[264px] shrink-0 border-r border-white/5 lg:block">
-        <div className="sticky top-0 h-dvh">
+        <div className="sticky top-0 h-svh">
           <AppSidebar role={role} user={user} />
         </div>
       </aside>

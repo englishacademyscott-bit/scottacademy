@@ -1,6 +1,7 @@
 import { requireUser } from "@/lib/guards";
 import { SectionHeader } from "@/components/ui/primitives";
 import { SupportContact } from "@/components/app/suporte-view";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 import { BookOpen, ChevronDown, LifeBuoy, Mail, MessageCircle, Phone } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
@@ -105,7 +106,7 @@ export default async function SuportePage() {
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-subtle" />
                 <div>
                   <p className="font-medium text-default">WhatsApp</p>
-                  <a href={`https://wa.me/${supportWhatsApp.replace(/\D/g, "")}`} className="text-brand-600 hover:underline dark:text-brand-300">Falar pelo WhatsApp</a>
+                  <WhatsAppLink phone={supportWhatsApp} message="Olá! Preciso de ajuda com a plataforma da Scott English Academy." className="text-brand-600 hover:underline dark:text-brand-300">Falar pelo WhatsApp</WhatsAppLink>
                 </div>
               </li> : null}
               <li className="flex items-start gap-3">

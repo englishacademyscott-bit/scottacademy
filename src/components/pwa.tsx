@@ -41,18 +41,6 @@ export function InstallPrompt() {
     };
   }, []);
 
-  React.useEffect(() => {
-    const onUpdated = () => {
-      toast("Nova versão disponível", {
-        description: "Reinicie o app para aplicar as novidades.",
-        action: { label: "Atualizar", onClick: () => window.location.reload() },
-        duration: 12000,
-      });
-    };
-    window.addEventListener("sea:sw-updated", onUpdated);
-    return () => window.removeEventListener("sea:sw-updated", onUpdated);
-  }, []);
-
   const install = async () => {
     if (!event) return;
     await event.prompt();
@@ -69,7 +57,7 @@ export function InstallPrompt() {
   if (!visible || !event) return null;
 
   return (
-    <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm animate-fade-up rounded-xl border border-subtle bg-raised p-4 shadow-lifted sm:inset-x-auto sm:right-6 sm:bottom-6">
+    <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl border border-subtle bg-raised p-4 shadow-lifted sm:inset-x-auto sm:right-6 sm:bottom-6">
       <div className="flex items-start gap-3">
         <Image
           src="/icons/icon-96.png"
@@ -87,6 +75,7 @@ export function InstallPrompt() {
           </p>
         </div>
         <button
+          type="button"
           onClick={dismiss}
           aria-label="Fechar"
           className="rounded-lg p-1 text-subtle transition-colors hover:bg-sunken hover:text-default"
@@ -121,13 +110,21 @@ export function UpdateBanner() {
   return (
     <div className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-3">
       <div className="flex items-center gap-3 rounded-full border border-subtle bg-raised px-4 py-2 shadow-lifted">
-        <RefreshCw className="h-4 w-4 text-brand-500" />
+        <RefreshCw className="h-4 w-4 shrink-0 text-brand-500" />
         <span className="text-sm font-medium text-default">
           Nova versão disponível
         </span>
         <Button size="sm" onClick={() => window.location.reload()}>
           Atualizar
         </Button>
+        <button
+          type="button"
+          onClick={() => setShow(false)}
+          aria-label="Dispensar aviso"
+          className="rounded-full p-1 text-subtle transition-colors hover:bg-sunken hover:text-default"
+        >
+          <X className="h-4 w-4" />
+        </button>
       </div>
     </div>
   );

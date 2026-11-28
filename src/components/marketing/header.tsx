@@ -12,18 +12,15 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/theme-provider";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 
-const WHATSAPP_URL =
-  "https://wa.me/5515998229592?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20Scott%20English%20Academy.";
-
-const NAV_LINKS: { href: string; label: string; external?: boolean }[] = [
-  { href: "#como-funciona", label: "Como funciona" },
-  { href: "#cursos", label: "Cursos" },
-  { href: "#aulas", label: "Aulas ao vivo" },
-  { href: "#planos", label: "Planos" },
+const NAV_LINKS: { href: string; label: string }[] = [
+  { href: "/#como-funciona", label: "Como funciona" },
+  { href: "/#cursos", label: "Cursos" },
+  { href: "/#aulas", label: "Aulas ao vivo" },
+  { href: "/#planos", label: "Planos" },
   { href: "/sobre", label: "Sobre" },
-  { href: "#faq", label: "FAQ" },
-  { href: WHATSAPP_URL, label: "Fale conosco", external: true },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export function MarketingHeader({
@@ -76,13 +73,17 @@ export function MarketingHeader({
             <a
               key={link.href}
               href={link.href}
-              target={link.external ? "_blank" : undefined}
-              rel={link.external ? "noopener noreferrer" : undefined}
               className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors duration-200 hover:bg-sunken hover:text-default"
             >
               {link.label}
             </a>
           ))}
+          <WhatsAppLink
+            message="Olá! Gostaria de saber mais sobre a Scott English Academy."
+            className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors duration-200 hover:bg-sunken hover:text-default"
+          >
+            Fale conosco
+          </WhatsAppLink>
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
@@ -155,14 +156,19 @@ export function MarketingHeader({
               <a
                 key={link.href}
                 href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted transition-colors duration-200 hover:bg-sunken hover:text-default"
               >
                 {link.label}
               </a>
             ))}
+            <WhatsAppLink
+              message="Olá! Gostaria de saber mais sobre a Scott English Academy."
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted transition-colors duration-200 hover:bg-sunken hover:text-default"
+            >
+              Fale conosco
+            </WhatsAppLink>
           </nav>
           <div className="mt-4 grid grid-cols-2 gap-2">
             {isAuthenticated ? (

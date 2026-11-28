@@ -33,13 +33,18 @@ export function SupportContact() {
     }
     setErrors({});
     setSending(true);
-    const result = await sendSupportMessage(parsed.data);
-    setSending(false);
-    if (result.ok) {
-      toast.success(result.message);
-      setForm({ subject: "", message: "" });
-    } else {
-      toast.error(result.error);
+    try {
+      const result = await sendSupportMessage(parsed.data);
+      if (result.ok) {
+        toast.success(result.message);
+        setForm({ subject: "", message: "" });
+      } else {
+        toast.error(result.error);
+      }
+    } catch {
+      toast.error("Não foi possível enviar sua mensagem agora. Tente novamente.");
+    } finally {
+      setSending(false);
     }
   };
 

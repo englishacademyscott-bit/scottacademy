@@ -24,6 +24,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/toaster";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { cancelSubscription, subscribeToPlan } from "@/app/app/assinatura/actions";
 
@@ -227,7 +228,7 @@ export function AssinaturaView({
         <div className="grid gap-4 md:grid-cols-2">
           {plans.map((plan) => {
             const isCurrent = plan.id === currentPlanId && isActive;
-            const wppUrl = `https://wa.me/5515998229592?text=${encodeURIComponent(`Olá! Quero saber mais sobre o ${plan.name} de aulas ao vivo exclusivas e personalizadas da Scott English Academy.`)}`;
+            const wppMsg = `Olá! Quero saber mais sobre o ${plan.name} de aulas ao vivo exclusivas e personalizadas da Scott English Academy.`;
             return (
               <Card
                 key={plan.id}
@@ -273,15 +274,34 @@ export function AssinaturaView({
                     ))}
                   </ul>
 
-                  <Button
-                    asChild
-                    className="w-full"
-                    variant={plan.highlight ? "primary" : "secondary"}
-                  >
-                    <a href={wppUrl} target="_blank" rel="noopener noreferrer">
-                      Falar com a nossa equipe
-                    </a>
-                  </Button>
+                  {plan.priceCents > 0 ? (
+                    <Button
+                      className="w-full"
+                      variant={plan.highlight ? "primary" : "secondary"}
+                      disabled={isCurrent || busyPlan === plan.id}
+                      onClick={() => handleSubscribe(plan)}
+                    >
+                      {isCurrent ? (
+                        "Plano atual"
+                      ) : busyPlan === plan.id ? (
+                        "Processando…"
+                      ) : (
+                        <>
+                          <CreditCard className="h-4 w-4" /> Assinar {plan.name}
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      asChild
+                      className="w-full"
+                      variant={plan.highlight ? "primary" : "secondary"}
+                    >
+                      <WhatsAppLink message={wppMsg}>
+                        Falar com a nossa equipe
+                      </WhatsAppLink>
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             );
